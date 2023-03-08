@@ -30,6 +30,7 @@ import shutil
 from docopt import docopt
 
 import os
+from colorama import Style, Fore
 
 import lib.instpkg as instpkg
 import lib.log as log
