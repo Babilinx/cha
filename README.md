@@ -1,23 +1,24 @@
-# Evox, a user-friendly but powerful package manager
+# Cha, a simple and lightweight package manager
 
-Evox is the package manager of the Stock Linux distro which is a new community effort to make a good alternative to the most used distros like Ubuntu but without being driven by a society and with all its software open-source.
+Cha is the package toolbox of [ChaOS](). It can create, build packages from source, but also install, upgrade and remove them.
+It is a fork of [evox](https://github/stock-linux/evox)-1.1.1 RIP Stock Linux.
 
 # Usage
 
 ```
-Evox.
+Cha.
 
 Usage:
-  evox get <package>...
-  evox remove <package>...
-  evox upgrade
-  evox info <package>
-  evox search <expr>
-  evox sync
-  evox init
-  evox tree <package>
-  evox (-h | --help)
-  evox (-v | --version)
+  cha get <package>...
+  cha remove <package>...
+  cha upgrade
+  cha info <package>
+  cha search <expr>
+  cha sync
+  cha init
+  cha tree <package>
+  cha (-h | --help)
+  cha (-v | --version)
 
 Options:
   get           Download and install a package

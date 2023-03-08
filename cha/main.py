@@ -1,16 +1,16 @@
-"""Evox 1.1.1
+"""Cha 1.0.0
 
 Usage:
-  evox get [-y] <package>...
-  evox remove <package>...
-  evox upgrade
-  evox info <package>
-  evox search <expr>
-  evox sync
-  evox init
-  evox tree <package>
-  evox (-h | --help)
-  evox (-v | --version)
+  cha get [-y] <package>...
+  cha remove <package>...
+  cha upgrade
+  cha info <package>
+  cha search <expr>
+  cha sync
+  cha init
+  cha tree <package>
+  cha (-h | --help)
+  cha (-v | --version)
 
 Options:
   get           Download and install a package
@@ -63,7 +63,7 @@ def print_dependencies(tree, level=1, already_printed=[]):
             already_printed.append(dependency)
 
 if __name__ == '__main__':
-    arguments = docopt(__doc__, version='Evox 1.1.1')
+    arguments = docopt(__doc__, version='Cha 1.0.0')
 
     if arguments['get']:
         for package in arguments['<package>']:
