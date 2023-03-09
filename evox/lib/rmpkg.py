@@ -49,8 +49,7 @@ def rmpkg(package: str, with_deps: bool = True):
     system_pkgs = ["evox", "glibc"]
 
     if package in system_pkgs:
-        log.log_error("You cannot remove the package " +
-                      package + " because it's a system package.")
+        print(f'Impossible to remove {package}, it is a system package')
         return
     # We get the path to the package directory
     pkgdir = root + "/var/evox/packages/" + package
@@ -68,16 +67,14 @@ def rmpkg(package: str, with_deps: bool = True):
                     # We check if the package is a dependency of another package
                     if not db.is_package_dependency(dep, package):
                         # Log an info message
-                        log.log_info("Removing dependency " + dep)
+                        print(f'Removing dependency {dep}...')
                         # If it isn't, we remove it
                         rmpkg(dep)
                         # We log a success message
-                        log.log_success("Removed dependency " + dep)
-                        print()
+                        print(f'Removed dependency {dep}!')
                     else:
                         # Log an info message
-                        log.log_info(
-                            "Package " + dep + " is a dependency of another package, not removing it")
+                        print(f'Impossible to remove {package}, it is a dependency of another package.')
 
     # We get the PKGTREE file
     rmtree(open(pkgdir + "/PKGTREE", "r").read().splitlines())

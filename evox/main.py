@@ -95,19 +95,62 @@ if __name__ == '__main__':
         log.log_success("The default structure has been created.")
 
     if arguments['remove']:
-        for package in arguments['<package>']:
-            # First, we check if the package is installed
-            # We can use the lib.instpkg.is_installed function
-            if instpkg.is_package_installed(package):
-                # If it is, we remove it
-                rmpkg.rmpkg(package)
-                if not instpkg.is_package_installed(package):
-                    # If it is removed, we log a success message
-                    log.log_success("The package " + package +
-                                    " has been removed.")
-            else:
-                # If it isn't, we log an error
-                log.log_error("The package " + package + " is not installed.")
+        packages_info = {}
+        max_name_len = 0
+        max_version_len = 0
+        max_size_len = 0
+
+        print('\nThe following package(s) will be remove:')
+        # Get all of the needed infos on each package and get the max len of package name, version, size and description for UX
+        for package in arguments['<packages>']:
+            info = db.get_local_package_info(package)
+            version = info['version']
+            description = info['description']
+            if 'size' in info: size = info['size']
+            else: size = 'unknown'
+
+            packages_info[package] = [version, size, description]
+
+            if len(package) > max_name_len: max_name_len = len(package)
+            if len(version) > max_version_len: max_version_len = len(version)
+            if len(size) > max_size_len: max_size_len = len(size)
+
+        # Calculating the number of spaces needed between each column
+        name_spacer = ' ' * (max_name_len - len('Name') + 4)
+        version_spacer = ' ' * (max_version_len - len('Version') + 4)
+        size_spacer = ' ' * (max_size_len - len('Size') + 4)
+
+        print(f'\n{Style.BRIGHT}Name{name_spacer}Version{version_spacer}Size{size_spacer}Description{Style.NORMAL}')
+
+        # Printing package(s) infos
+        for version, size, description in package_infos[package]:
+            name_spacer = ' ' * (max_name_len - len(package) + 4)
+            version_spacer = ' ' * (max_version_len - len(version) + 4)
+            size_spacer = ' ' * (max_size_len - len(size) + 4)
+
+            print(f'{package}{name_spacer}{version}{version_spacer}{size}{size_spacer}{description}')
+
+        # Ask for removing
+        if log.log_ask('\nProceed?'):
+
+            # Removing each package
+            for package in arguments['<package>']:
+                # First, we check if the package is installed
+                # We can use the lib.instpkg.is_installed function
+                if instpkg.is_package_installed(package):
+                    print(f'\nRevoving {package}...')
+                    # If it is, we remove it
+                    rmpkg.rmpkg(package)
+                    if not instpkg.is_package_installed(package):
+                        # If it is removed, we log a success message
+                        print(f'{package} as been removed!')
+                else:
+                    # If it isn't, we log an error
+                    print(f'{package} is not installed!')
+
+        # Aborting removing if the user want it
+        else:
+            print('\nAborting...')
 
     if arguments['sync']:
         # We get the config
