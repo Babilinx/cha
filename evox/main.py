@@ -41,6 +41,7 @@ import lib.net as net
 
 from lib.root import *
 
+
 def find_dependencies(package):
     tree = {}
     tree[package] = {}
@@ -62,6 +63,7 @@ def print_dependencies(tree, level=1, already_printed=[]):
             print_dependencies(tree[dependency], level + 1, already_printed)
 
             already_printed.append(dependency)
+
 
 if __name__ == '__main__':
     arguments = docopt(__doc__, version='Evox 1.1.1')
